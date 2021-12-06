@@ -1,0 +1,55 @@
+## Question 1 ##
+
+var mapFunction = function(){emit(this.title, this.authors);};
+var reduceFunction = function (key, values) {return Array.sum(values).length;};
+var queryParam = {query : {}, out : "resultat"};
+db.publis.mapReduce(mapFunction, reduceFunction, queryParam);
+db.resultat.find();
+
+## Question 2 ##
+
+var mapFunction = function(){if(this.booktitle)emit(this.booktitle, 1);};
+var reduceFunction = function (key, values) {return values.length;};
+var queryParam = {query : {"publisher":"Springer"}, out : "resultat"};
+db.publis.mapReduce(mapFunction, reduceFunction, queryParam);
+db.resultat.find();
+
+## Question 3 ##
+
+var mapFunction = function(){emit(this.year, 1);};
+var reduceFunction = function (key, values) {return values.length;};
+var queryParam = {query : {"publisher":"Springer"}, out : "resultat"};
+db.publis.mapReduce(mapFunction, reduceFunction, queryParam);
+db.resultat.find();
+
+## Question 4 ##
+
+var mapFunction = function(){if(this.booktitle)emit({"publisher":this.publisher, "year":this.year}, 1);};
+var reduceFunction = function (key, values) {return values.length;};
+var queryParam = {query : {}, out : "resultat"};
+db.publis.mapReduce(mapFunction, reduceFunction, queryParam);
+db.resultat.find();
+
+## Question 5 ##
+
+var mapFunction = function(){emit(this.year, 1);};
+var reduceFunction = function (key, values) {return values.length;};
+var queryParam = {query : {"authors":{$in:["Toru Ishida"]}}, out : "resultat"};
+db.publis.mapReduce(mapFunction, reduceFunction, queryParam);
+db.resultat.find();
+
+## Question 6 ##
+
+var mapFunction = function(){emit("total", this.pages.end-this.pages.start);};
+var reduceFunction = function (key, values) {return Array.avg(values);};
+var queryParam = {query : {"authors":{$in:["Toru Ishida"]}, "type":"Article"}, out : "resultat"};
+db.publis.mapReduce(mapFunction, reduceFunction, queryParam);
+db.resultat.find();
+
+## Question 7 ##
+
+var mapFunction = function(){emit(this.authors, this.title);};
+var reduceFunction = function (key, values) {return Array.sum(values);};
+var queryParam = {"authors": }, out : "resultat"};
+db.publis.mapReduce(mapFunction, reduceFunction, queryParam);
+db.resultat.find();
